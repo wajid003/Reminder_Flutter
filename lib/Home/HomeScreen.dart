@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:reminder_app/Reminder/ReminderScreen.dart';
+import 'package:reminder_app/Spent/SpentScreen.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -10,7 +11,8 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
   static List<Widget> _widgetOptions = <Widget>[
-    ReminderScreen()
+    ReminderScreen(),
+    SpentScreen()
   ];
   @override
   Widget build(BuildContext context) {
