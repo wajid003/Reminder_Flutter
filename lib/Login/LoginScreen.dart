@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:reminder_app/Home/HomeScreen.dart';
+import 'package:reminder_app/Login/LoginResponse.dart';
 import 'package:reminder_app/Signup/SignupScreen.dart';
 
 import 'LoginProvider.dart';
@@ -18,6 +19,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     var loginState = Provider.of<LoginProvider>(context);
+    loginState.getScreenContext(context);
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
@@ -56,11 +58,13 @@ class _LoginScreenState extends State<LoginScreen> {
               context,
               MaterialPageRoute(builder: (context) => HomeScreen()),
             );
-           /* if (_usernameController.text.isNotEmpty &&
-                _passwordController.text.isNotEmpty)
+            /*loginState.showSnackBar();
+            if (_usernameController.text.isNotEmpty &&
+                _passwordController.text.isNotEmpty) {
               loginState.perFormLogin(
                   _usernameController.text, _passwordController.text);
-            else
+            }*/
+           /* else
               Fluttertoast.showToast(msg: "Enter All the details");*/
           },
         ),
