@@ -2,7 +2,7 @@
 import 'package:dio/dio.dart';
 
 class ApiClient{
-  static final String BASE_URL = "https://greenhills.care/api/app/";
+  static final String BASE_URL = "http://192.168.10.153:8081/";
   static final ApiClient _apiClient = ApiClient._internal();
   Dio _dio;
 

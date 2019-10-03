@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
@@ -54,10 +56,13 @@ class _LoginScreenState extends State<LoginScreen> {
         RaisedButton(
           child: Text("Login"),
           onPressed: () {
-            Navigator.push(
+            /*Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => HomeScreen()),
-            );
+            );*/
+
+            loginState.getPermissionList("login");
+
             /*loginState.showSnackBar();
             if (_usernameController.text.isNotEmpty &&
                 _passwordController.text.isNotEmpty) {
@@ -76,7 +81,9 @@ class _LoginScreenState extends State<LoginScreen> {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => SignupScreen()),
+              MaterialPageRoute(builder: (context) => ChangeNotifierProvider<LoginProvider>(
+                  builder: (context) => LoginProvider(),
+                  child: SignupScreen())),
             );
           },
         )

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:reminder_app/Login/LoginProvider.dart';
 
 class SignupScreen extends StatefulWidget {
   @override
@@ -10,6 +12,7 @@ class _SignupScreenState extends State<SignupScreen> {
   final _passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    var loginState = Provider.of<LoginProvider>(context);
     return Scaffold(
       resizeToAvoidBottomPadding : false,
       body: Column(
@@ -54,7 +57,9 @@ class _SignupScreenState extends State<SignupScreen> {
           ),
           RaisedButton(
             child: Text("SignUp"),
-            onPressed: () {},
+            onPressed: () {
+              loginState.getPermissionList("signup");
+            },
           )
         ],
       ),
