@@ -20,8 +20,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var loginState = Provider.of<LoginProvider>(context);
-    loginState.getScreenContext(context);
+    var loginState = Provider.of<LoginProvider>(context, listen: false);
+//    loginState.getScreenContext(context);
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
@@ -53,39 +53,55 @@ class _LoginScreenState extends State<LoginScreen> {
         SizedBox(
           height: 20.0,
         ),
-        RaisedButton(
-          child: Text("Login"),
-          onPressed: () {
-            /*Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => HomeScreen()),
-            );*/
+        Selector<LoginProvider, bool>(
+          builder:(context, data, child){
+            print('++++++++++++++++++++++++++++login button reloaded');
+            return RaisedButton(
+                child: Text("Login", style: TextStyle(color: data? Colors.green : Colors.black)),
+              onPressed: () {
 
-            loginState.getPermissionList("login");
+//                  loginState.alterLoginText();
 
-            /*loginState.showSnackBar();
-            if (_usernameController.text.isNotEmpty &&
-                _passwordController.text.isNotEmpty) {
-              loginState.perFormLogin(
-                  _usernameController.text, _passwordController.text);
-            }*/
-           /* else
-              Fluttertoast.showToast(msg: "Enter All the details");*/
-          },
+                /*Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => HomeScreen()),
+              );*/
+
+                loginState.getPermissionList("login");
+
+                /*loginState.showSnackBar();
+              if (_usernameController.text.isNotEmpty &&
+                  _passwordController.text.isNotEmpty) {
+                loginState.perFormLogin(
+                    _usernameController.text, _passwordController.text);
+              }*/
+                /* else
+                Fluttertoast.showToast(msg: "Enter All the details");*/
+              },
+            );
+          }
+          ,selector: (context, provider)=>provider.changeLoginColor,
         ),
         SizedBox(
           height: 10.0,
         ),
-        RaisedButton(
-          child: Text("SignUp"),
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => ChangeNotifierProvider<LoginProvider>(
-                  builder: (context) => LoginProvider(),
-                  child: SignupScreen())),
+        Selector<LoginProvider, bool>(
+          builder: (context, data, child) {
+            print('++++++++++++++++++++++++++++signup button reloaded');
+            return RaisedButton(
+              child: Text("SignUp", style: TextStyle(color: data ? Colors.green : Colors.black)),
+              onPressed: () {
+                loginState.alterText();
+                /*Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ChangeNotifierProvider<LoginProvider>(
+                    builder: (context) => LoginProvider(context),
+                    child: SignupScreen())),
+              );*/
+              },
             );
           },
+          selector: (context, changeText) => loginState.changeTextColor,
         )
       ],
     );

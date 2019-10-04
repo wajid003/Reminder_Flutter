@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
         home: SafeArea(
           child: Scaffold(
               body: ChangeNotifierProvider<LoginProvider>(
-              builder: (context) => LoginProvider(),
+              builder: (context) => LoginProvider(context),
               child: LoginScreen(),
             ),
           ),

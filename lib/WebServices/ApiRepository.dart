@@ -3,25 +3,31 @@ import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:reminder_app/BaseResponse.dart';
 import 'package:reminder_app/Home/ErrorResponse.dart';
+import 'package:reminder_app/Login/LoginProvider.dart';
 import 'package:reminder_app/WebServices/ApiClient.dart';
 import 'package:reminder_app/WebServices/ApiEndPoint.dart';
+
+import '../BaseProvider.dart';
 
 class ApiRepository {
   static final ApiRepository _apiClient = ApiRepository._internal();
   static final Dio _dio = ApiClient().getDio();
   static StreamController _streamController = StreamController.broadcast();
+  static BaseProvider _baseProvider;
 
   ApiRepository._internal();
 
-  factory ApiRepository() {
+  factory ApiRepository(BaseProvider baseProvider) {
+    _baseProvider = baseProvider;
     return _apiClient;
   }
 
-  _enqueue(Response response) {
+  void _enqueue(Response response) {
     if (response.data != null && response.statusCode == 200) {
       _streamController.sink.add(response);
     } else if (response.statusCode == 401) {
       /**Perform unauthorize operation**/
+      _baseProvider.performUnauthorize();
     } else if (response.statusCode == 202) {
       _streamController.sink.addError(ErrorResponse(
           errorMessage: (response as BaseResponse).message,
@@ -34,7 +40,7 @@ class ApiRepository {
     _closeStream();
   }
 
-  _closeStream() {
+  void _closeStream() {
     _streamController.close();
     _streamController = null;
   }
